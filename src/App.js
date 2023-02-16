@@ -25,7 +25,7 @@ const cache = new InMemoryCache({
 });
 
 const client = new ApolloClient({
-  uri: "http://localhost:8000/graphql",
+  uri: "https://project-manager-backend.adaptable.app/graphql", // http://localhost:8000/graphql for testing
   cache: cache,
 });
 
