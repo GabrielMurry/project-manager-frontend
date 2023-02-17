@@ -29,16 +29,6 @@ const cache = new InMemoryCache({
   },
 });
 
-const enchancedFetch = (url, init) => {
-  return fetch(url, {
-    ...init,
-    headers: {
-      ...init.headers,
-      "Access-Control-Allow-Origin": "*",
-    },
-  }).then((response) => response);
-};
-
 const link = createHttpLink({
   // http://localhost:8000/graphql for testing
   uri: "https://project-manager-backend.adaptable.app/graphql", // https://project-manager-backend.adaptable.app/graphql for deployment
@@ -46,7 +36,6 @@ const link = createHttpLink({
   fetchOptions: {
     mode: "cors",
   },
-  fetch: enchancedFetch,
 });
 
 const client = new ApolloClient({
