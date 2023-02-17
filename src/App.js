@@ -1,5 +1,10 @@
 import Header from "./components/Header";
-import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
+import {
+  ApolloProvider,
+  ApolloClient,
+  InMemoryCache,
+  createHttpLink,
+} from "@apollo/client";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
@@ -24,9 +29,15 @@ const cache = new InMemoryCache({
   },
 });
 
+const link = createHttpLink({
+  // http://localhost:8000/graphql for testing
+  uri: "https://project-manager-backend.adaptable.app/graphql", // https://project-manager-backend.adaptable.app/graphql for deployment
+  credentials: "include",
+});
+
 const client = new ApolloClient({
-  uri: "https://project-manager-backend.adaptable.app/graphql", // http://localhost:8000/graphql for testing
-  cache: cache, // https://project-manager-backend.adaptable.app/graphql for deployment
+  cache: cache,
+  link,
 });
 
 function App() {
