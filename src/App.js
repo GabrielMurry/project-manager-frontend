@@ -31,7 +31,7 @@ const cache = new InMemoryCache({
 
 const link = new HttpLink({
   // http://localhost:8000/graphql for testing
-  uri: "http://localhost:8000/graphql", // https://project-manager-backend.adaptable.app/graphql for deployment
+  uri: "https://project-manager-backend.adaptable.app/graphql", // https://project-manager-backend.adaptable.app/graphql for deployment
   credentials: "include",
   headers: { "Content-Type": "application/json" },
   fetchOptions: {
