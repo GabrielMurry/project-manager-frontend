@@ -70,13 +70,14 @@ const AddClientModal = () => {
               ></button>
             </div>
             <div className="modal-body">
-              <form onSubmit={onSubmit}>
+              <form onSubmit={onSubmit} className="was-validated">
                 <div className="mb-3">
                   <label className="form-label">Name</label>
                   <input
                     type="text"
                     className="form-control"
                     id="name"
+                    required
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                   />
@@ -87,6 +88,7 @@ const AddClientModal = () => {
                     type="email"
                     className="form-control"
                     id="email"
+                    required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
@@ -97,18 +99,25 @@ const AddClientModal = () => {
                     type="text"
                     className="form-control"
                     id="phone"
+                    required
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                   />
                 </div>
 
-                <button
-                  type="submit"
-                  data-bs-dismiss="modal" // closes modal!
-                  className="btn btn-secondary"
-                >
-                  Submit
-                </button>
+                {name !== "" && email !== "" && phone !== "" ? (
+                  <button
+                    type="submit"
+                    data-bs-dismiss="modal" // closes modal!
+                    className="btn btn-secondary"
+                  >
+                    Submit
+                  </button>
+                ) : (
+                  <button className="btn btn-secondary" disabled>
+                    Submit
+                  </button>
+                )}
               </form>
             </div>
           </div>

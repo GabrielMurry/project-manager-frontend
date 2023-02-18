@@ -6,12 +6,16 @@ const ADD_PROJECT = gql`
     $description: String!
     $status: ProjectStatus!
     $clientId: ID!
+    $startDate: String!
+    $endDate: String!
   ) {
     addProject(
       name: $name
       description: $description
       status: $status
       clientId: $clientId
+      startDate: $startDate
+      endDate: $endDate
     ) {
       id
       name
@@ -23,6 +27,8 @@ const ADD_PROJECT = gql`
         email
         phone
       }
+      startDate
+      endDate
     }
   }
 `;
@@ -41,12 +47,16 @@ const UPDATE_PROJECT = gql`
     $name: String!
     $description: String!
     $status: ProjectStatusUpdate!
+    $startDate: String!
+    $endDate: String!
   ) {
     updateProject(
       id: $id
       name: $name
       description: $description
       status: $status
+      startDate: $startDate
+      endDate: $endDate
     ) {
       id
       name
@@ -58,6 +68,8 @@ const UPDATE_PROJECT = gql`
         email
         phone
       }
+      startDate
+      endDate
     }
   }
 `;

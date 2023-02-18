@@ -4,7 +4,6 @@ import { DELETE_CLIENT } from "../mutations/clientMutations";
 import { GET_CLIENTS } from "../queries/clientQueries";
 import { GET_PROJECTS } from "../queries/projectQueries";
 import { useMutation } from "@apollo/client";
-// import Spinner from "./Spinner";
 
 const ClientRow = ({ client }) => {
   const [deleteClient] = useMutation(DELETE_CLIENT, {

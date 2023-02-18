@@ -19,6 +19,8 @@ const EditProjectForm = ({ project }) => {
         throw new Error(`Unknown status: ${project.status}`);
     }
   });
+  const [startDate, setStartDate] = useState(project.startDate);
+  const [endDate, setEndDate] = useState(project.endDate);
 
   const [updateProject] = useMutation(UPDATE_PROJECT, {
     variables: {
@@ -26,17 +28,14 @@ const EditProjectForm = ({ project }) => {
       name: name,
       description: description,
       status: status,
+      startDate: startDate,
+      endDate: endDate,
     },
     refetchQueries: [{ query: GET_PROJECT, variables: { id: project.id } }],
   });
 
   const onSubmit = (e) => {
     e.preventDefault();
-
-    // if (!name || !description || !status) {
-    //   return alert("Please fill out all fields");
-    // }
-
     updateProject();
   };
 
@@ -75,6 +74,32 @@ const EditProjectForm = ({ project }) => {
             <option value="progress">In Progress</option>
             <option value="completed">Completed</option>
           </select>
+        </div>
+
+        {/* Project Start Date */}
+        <div>
+          <label className="form-label">Project Start Date</label>
+          <div className="mb-3">
+            <input
+              type="date"
+              className="form-control"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+            />
+          </div>
+        </div>
+
+        {/* Project End Date */}
+        <div>
+          <label className="form-label">Project End Date</label>
+          <div className="mb-3">
+            <input
+              type="date"
+              className="form-control"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+            />
+          </div>
         </div>
 
         <button type="submit" className="btn btn-primary">

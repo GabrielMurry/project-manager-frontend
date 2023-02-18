@@ -9,10 +9,19 @@ const AddProjectModal = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [clientId, setClientId] = useState("");
-  const [status, setStatus] = useState("new");
+  const [status, setStatus] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
 
   const [addProject] = useMutation(ADD_PROJECT, {
-    variables: { name, description, clientId, status },
+    variables: {
+      name,
+      description,
+      clientId,
+      status,
+      startDate,
+      endDate,
+    },
     update(cache, { data: { addProject } }) {
       const { projects } = cache.readQuery({ query: GET_PROJECTS });
       cache.writeQuery({
@@ -27,16 +36,18 @@ const AddProjectModal = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (name === "" || description === "" || status === "") {
-      return alert("Please fill in all fields");
-    }
+    // if (name === "" || description === "" || status === "") {
+    //   return alert("Please fill in all fields");
+    // }
 
-    addProject(name, description, clientId, status);
+    addProject(name, description, clientId, status, startDate, endDate);
 
     setName("");
     setDescription("");
-    setStatus("new");
+    setStatus("");
     setClientId("");
+    setStartDate("");
+    setEndDate("");
   };
 
   if (loading) {
@@ -85,7 +96,11 @@ const AddProjectModal = () => {
                   ></button>
                 </div>
                 <div className="modal-body">
-                  <form onSubmit={onSubmit}>
+                  <form
+                    className="was-validated"
+                    noValidate
+                    onSubmit={onSubmit}
+                  >
                     <div className="mb-3">
                       <label className="form-label">Name</label>
                       <input
@@ -93,6 +108,7 @@ const AddProjectModal = () => {
                         className="form-control"
                         id="name"
                         value={name}
+                        required
                         onChange={(e) => setName(e.target.value)}
                       />
                     </div>
@@ -102,6 +118,7 @@ const AddProjectModal = () => {
                         className="form-control"
                         id="description"
                         value={description}
+                        required
                         onChange={(e) => setDescription(e.target.value)}
                       ></textarea>
                     </div>
@@ -111,8 +128,10 @@ const AddProjectModal = () => {
                         id="status"
                         className="form-select"
                         value={status}
+                        required
                         onChange={(e) => setStatus(e.target.value)}
                       >
+                        <option value="">Select Status...</option>
                         <option value="new">Not Started</option>
                         <option value="progress">In Progress</option>
                         <option value="completed">Completed</option>
@@ -126,9 +145,10 @@ const AddProjectModal = () => {
                         id="clientId"
                         className="form-select"
                         value={clientId}
+                        required
                         onChange={(e) => setClientId(e.target.value)}
                       >
-                        <option value="">Select Client</option>
+                        <option value="">Select Client...</option>
                         {data.clients.map((client) => (
                           <option key={client.id} value={client.id}>
                             {client.name}
@@ -137,13 +157,48 @@ const AddProjectModal = () => {
                       </select>
                     </div>
 
-                    <button
-                      type="submit"
-                      data-bs-dismiss="modal" // closes modal!
-                      className="btn btn-primary"
-                    >
-                      Submit
-                    </button>
+                    {/* Project Start Date */}
+                    <div>
+                      <label className="form-label">Project Start Date</label>
+                      <div className="mb-3">
+                        <input
+                          type="date"
+                          className="form-control"
+                          value={startDate}
+                          onChange={(e) => setStartDate(e.target.value)}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Project End Date */}
+                    <div>
+                      <label className="form-label">Project End Date</label>
+                      <div className="mb-3">
+                        <input
+                          type="date"
+                          className="form-control"
+                          value={endDate}
+                          onChange={(e) => setEndDate(e.target.value)}
+                        />
+                      </div>
+                    </div>
+
+                    {name !== "" &&
+                    description !== "" &&
+                    status !== "" &&
+                    clientId !== "" ? (
+                      <button
+                        type="submit"
+                        data-bs-dismiss="modal" // closes modal!
+                        className="btn btn-primary"
+                      >
+                        Submit
+                      </button>
+                    ) : (
+                      <button className="btn btn-primary" disabled>
+                        Submit
+                      </button>
+                    )}
                   </form>
                 </div>
               </div>
