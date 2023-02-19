@@ -3,7 +3,7 @@ import {
   ApolloProvider,
   ApolloClient,
   InMemoryCache,
-  HttpLink,
+  createHttpLink,
 } from "@apollo/client";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
@@ -29,14 +29,10 @@ const cache = new InMemoryCache({
   },
 });
 
-const link = new HttpLink({
+const link = createHttpLink({
   // http://localhost:8000/graphql for testing
   uri: "https://project-manager-backend.adaptable.app/graphql", // https://project-manager-backend.adaptable.app/graphql for deployment
   credentials: "include",
-  headers: { "Content-Type": "application/json" },
-  fetchOptions: {
-    mode: "cors",
-  },
 });
 
 const client = new ApolloClient({
