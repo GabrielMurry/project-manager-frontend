@@ -1,5 +1,6 @@
 import { FaCheckCircle, FaPlayCircle, FaPauseCircle } from "react-icons/fa";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 const ProjectCard = ({ project }) => {
   return (
@@ -18,9 +19,9 @@ const ProjectCard = ({ project }) => {
           <div className="d-flex justify-content-between align-items-center">
             <h5 className="card-title">{project.name}</h5>
 
-            <a className="btn btn-light" href={`/${project.id}`}>
+            <Link to={`/project/${project.id}`} className="btn btn-light">
               View
-            </a>
+            </Link>
           </div>
           <div className="d-flex justify-content-between align-items-center">
             <p className="small">
